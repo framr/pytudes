@@ -10,14 +10,20 @@ def get_path(wire):
     x, y = 0, 0
     for move in wire:
         if move.startswith("U"):
-            y += int(move[1:])
-        if move.startswith("D"):
-            y -= int(move[1:])
-        if move.startswith("L"):
-            x -= int(move[1:])
-        if move.startswith("R"):
-            x += int(move[1:])
-        pos.append(Point(x, y))
+            dx, dy = 0, 1
+        elif move.startswith("D"):
+            dx, dy = 0, -1
+        elif move.startswith("L"):
+            dx, dy = -1, 0
+        elif move.startswith("R"):
+            dx, dy = 1, 0
+        else:
+            raise ValueError
+        steps = int(move[1:])
+        for _ in range(steps):
+            x += dx
+            y += dy
+            pos.append(Point(x=x, y=y))
     return pos
 
 
@@ -44,9 +50,9 @@ def create_field(path1, path2):
 
     #print(field)
     put_path(path1, field, order=0, dx=minx, dy=miny)
-    #print(field)
+    print(field)
     put_path(path2, field, order=1, dx=minx, dy=miny)
-    #print(field)
+    print(field)
 
     center = Point(x=-minx, y=-miny)
     return field, center
