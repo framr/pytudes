@@ -31,6 +31,9 @@ def put_path(path, field, order, dx=0, dy=0):
     for pp in path:
         field[pp.y - dy][pp.x - dx][order] = 1
 
+def print_field(field):
+    for col in field:
+        print("  ".join(["%s,%s" % (ff, ss) for ff, ss in col]))
 
 def create_field(path1, path2):
     xx = [pp.x for pp in path1]
@@ -48,11 +51,13 @@ def create_field(path1, path2):
     print(path1)
     print(path2)
 
-    #print(field)
+    print_field(field)
+    print("=" * 80)
     put_path(path1, field, order=0, dx=minx, dy=miny)
-    print(field)
+    print_field(field)
+    print("=" * 80)
     put_path(path2, field, order=1, dx=minx, dy=miny)
-    print(field)
+    print_field(field)
 
     center = Point(x=-minx, y=-miny)
     return field, center
